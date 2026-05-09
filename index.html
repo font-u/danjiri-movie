@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DANJIRI — PLAN IZ</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold:     #c9a84c;
+    --gold-lt:  #e8d07a;
+    --black:    #0d0d0c;
+    --charcoal: #111110;
+    --off-white:#f0ead8;
+    --muted:    #7a7260;
+    --dim:      #2e2c26;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--off-white);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    background: linear-gradient(to bottom, rgba(13,13,12,0.97), transparent);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; letter-spacing: 0.35em;
+    color: var(--gold); text-decoration: none; font-weight: 300;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.62rem; letter-spacing: 0.2em;
+    color: var(--muted); text-decoration: none; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: flex-end; padding: 0 3rem 5rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 55% at 65% 35%, rgba(201,168,76,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 50% at 15% 75%, rgba(201,168,76,0.03) 0%, transparent 60%);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 3px,
+      rgba(201,168,76,0.01) 3px, rgba(201,168,76,0.01) 4px
+    );
+  }
+  .hero-top-line {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--gold-lt), var(--gold), transparent);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 750px; }
+  .hero-eyebrow {
+    font-size: 0.58rem; letter-spacing: 0.35em; color: var(--muted);
+    text-transform: uppercase; margin-bottom: 1.2rem;
+    opacity: 0; animation: fadeUp 1s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4.5rem, 11vw, 9rem);
+    font-weight: 300; letter-spacing: 0.15em;
+    line-height: 0.88; color: var(--gold);
+    opacity: 0; animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(0.9rem, 1.8vw, 1.15rem);
+    font-style: italic; color: var(--muted);
+    margin-top: 1.3rem; letter-spacing: 0.04em; line-height: 1.5;
+    opacity: 0; animation: fadeUp 1s 0.7s forwards;
+  }
+  .hero-tags {
+    margin-top: 2.2rem; display: flex; gap: 1rem; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 1s 0.9s forwards;
+  }
+  .tag {
+    font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase;
+    border: 1px solid var(--dim); color: var(--muted);
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--dim); }
+
+  /* SECTIONS shared */
+  section { padding: 6rem 3rem; }
+  .inner { max-width: 920px; margin: 0 auto; }
+  .sec-label {
+    font-size: 0.58rem; letter-spacing: 0.35em; color: var(--gold);
+    text-transform: uppercase; margin-bottom: 2.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .sec-label::after { content:''; width: 40px; height: 1px; background: var(--dim); }
+
+  /* FILM */
+  .film-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+  .film-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 300;
+    line-height: 1.25; color: var(--off-white);
+  }
+  .film-heading em { color: var(--gold); font-style: italic; }
+  .film-quote {
+    margin-top: 2rem; padding-left: 1.2rem;
+    border-left: 1.5px solid var(--gold);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem; font-style: italic;
+    color: var(--off-white); line-height: 1.8;
+  }
+  .film-body { font-size: 0.88rem; line-height: 1.95; color: var(--muted); }
+  .film-body p + p { margin-top: 1.1rem; }
+
+  /* DIRECTOR */
+  .director-section { background: var(--charcoal); }
+  .director-grid { display: grid; grid-template-columns: 160px 1fr; gap: 4rem; align-items: start; }
+  .director-card {
+    border: 1px solid var(--dim); padding: 2rem 1.2rem 1.5rem;
+    text-align: center; position: relative;
+  }
+  .director-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .director-initials {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; font-weight: 300; color: var(--dim); line-height: 1;
+  }
+  .director-card-name {
+    font-size: 0.65rem; letter-spacing: 0.15em; color: var(--muted);
+    margin-top: 1rem; text-transform: uppercase;
+  }
+  .director-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem; font-weight: 300; color: var(--off-white);
+  }
+  .director-role {
+    font-size: 0.6rem; letter-spacing: 0.22em; color: var(--gold);
+    text-transform: uppercase; margin-top: 0.3rem;
+  }
+  .director-bio { margin-top: 1.5rem; font-size: 0.87rem; line-height: 1.9; color: var(--muted); }
+  .director-bio p + p { margin-top: 1rem; }
+  .director-credits {
+    margin-top: 2rem; display: flex; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .credit { font-size: 0.68rem; color: var(--muted); line-height: 1.5; }
+  .credit strong { display: block; color: var(--off-white); font-weight: 400; }
+
+  /* SERVICES */
+  .services-intro {
+    font-size: 0.88rem; line-height: 1.9; color: var(--muted);
+    max-width: 620px; margin-bottom: 3rem;
+  }
+  .services-intro em { color: var(--off-white); font-style: normal; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .service-card {
+    border: 1px solid var(--dim); padding: 2rem 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .service-card:hover { border-color: var(--gold); }
+  .service-card::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem; font-weight: 300; color: var(--dim); line-height: 1;
+  }
+  .service-title {
+    font-size: 0.75rem; letter-spacing: 0.15em; color: var(--off-white);
+    text-transform: uppercase; margin-top: 1rem;
+  }
+  .service-desc { font-size: 0.78rem; color: var(--muted); margin-top: 0.7rem; line-height: 1.8; }
+
+  /* CONTACT */
+  .contact-section { background: var(--charcoal); }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 300;
+    color: var(--off-white); margin-bottom: 0.8rem;
+  }
+  .contact-heading em { color: var(--gold); font-style: italic; }
+  .contact-sub { font-size: 0.82rem; color: var(--muted); line-height: 1.7; margin-bottom: 3rem; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 640px; }
+  .contact-card {
+    border: 1px solid var(--dim); padding: 2rem 1.5rem;
+    position: relative; transition: border-color 0.3s;
+  }
+  .contact-card:hover { border-color: var(--gold); }
+  .contact-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+  }
+  .contact-card:hover::before { transform: scaleX(1); }
+  .contact-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--off-white);
+  }
+  .contact-role { font-size: 0.58rem; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-top: 0.3rem; }
+  .contact-email { font-size: 0.75rem; color: var(--muted); margin-top: 1.2rem; }
+  .contact-email a { color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .contact-email a:hover { color: var(--gold); }
+  .contact-web { margin-top: 2.5rem; font-size: 0.72rem; color: var(--muted); }
+  .contact-web a { color: var(--off-white); text-decoration: none; border-bottom: 1px solid var(--dim); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem; border-top: 1px solid var(--dim);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; letter-spacing: 0.3em; color: var(--muted); }
+  .footer-copy { font-size: 0.58rem; letter-spacing: 0.08em; color: var(--dim); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4.5rem 1.5rem; }
+    .hero { padding: 0 1.5rem 4rem; }
+    .film-grid, .director-grid, .services-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    footer { flex-direction: column; gap: 0.8rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">DANJIRI</a>
+  <ul class="nav-links">
+    <li><a href="#film">Film</a></li>
+    <li><a href="#director">Director</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-top-line"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">A Film by Koichi Izuhara &nbsp;·&nbsp; PLAN IZ</p>
+    <h1 class="hero-title">DANJIRI</h1>
+    <p class="hero-subtitle">When a Festival Dies, So Does a Community</p>
+    <div class="hero-tags">
+      <span class="tag">Drama</span>
+      <span class="tag">Japan · Osaka</span>
+      <span class="tag">2025</span>
+      <span class="tag">Feature Film</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- FILM -->
+<section id="film">
+  <div class="inner">
+    <p class="sec-label reveal">The Film</p>
+    <div class="film-grid">
+      <div>
+        <h2 class="film-heading reveal">A town. <em>A drum.</em><br>A last chance.</h2>
+        <blockquote class="film-quote reveal">
+          "It was never just a festival.<br>It was the heartbeat of a community."
+        </blockquote>
+      </div>
+      <div class="film-body reveal">
+        <p>Yumemi lost her father to a Danjiri festival accident. Haunted by grief, she fled to Tokyo — vowing never to return. Then her grandfather dies, and she comes home to find that the very Danjiri her father loved most is on the verge of permanent extinction.</p>
+        <p>Driven by a force she cannot name, she cries out: <em>"Is this really okay?!"</em> — and sets in motion a desperate push to revive the float one final time.</p>
+        <p>Young and old, stubborn elders and restless youth, all must find a way to pull together before the last ropes are cut forever.</p>
+        <p>Based on the real story of Osawa-cho, Kishiwada City, whose Danjiri nearly vanished — until a film brought it back to life. Fiction rooted in documentary truth.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DIRECTOR -->
+<section class="director-section" id="director">
+  <div class="inner">
+    <p class="sec-label reveal">Director</p>
+    <div class="director-grid">
+      <div class="director-card reveal">
+        <div class="director-initials">KI</div>
+        <p class="director-card-name">Director</p>
+      </div>
+      <div>
+        <h2 class="director-name reveal">Koichi Izuhara</h2>
+        <p class="director-role reveal">Writer &amp; Director</p>
+        <div class="director-bio reveal">
+          <p>Born in 1987 in Kishiwada City, Osaka — the birthplace of the Danjiri festival — Koichi Izuhara grew up pulling the float through the very streets he would later immortalise on screen.</p>
+          <p>He moved to Tokyo at 20 to pursue filmmaking, studying under acclaimed director Kazuyuki Izutsu. After years as an assistant director, he made his debut with the short film <em>Flowers at the Festival</em> (2013), which won the Runner-up Grand Prix at the Kashikojima Film Festival.</p>
+          <p>In 2022 he directed his first feature, <em>Restaurant in the Forest</em>, released nationwide in Japan. He is also a published novelist — his debut <em>Keyaki no Tsure</em> (2022) is set during the Danjiri festival.</p>
+          <p><em>DANJIRI</em> is his most personal work: shot on location in Osawa-cho with full cooperation from the town's real festival community.</p>
+        </div>
+        <div class="director-credits reveal">
+          <div class="credit"><strong>2013</strong>Kashikojima Film Festival<br>Runner-up Grand Prix</div>
+          <div class="credit"><strong>2022</strong><em>Restaurant in the Forest</em><br>Nationwide release, Japan</div>
+          <div class="credit"><strong>2022</strong>Novel: <em>Keyaki no Tsure</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="inner">
+    <p class="sec-label reveal">Production Services</p>
+    <p class="services-intro reveal">
+      Planning a production in Japan? <em>PLAN IZ offers full-service production support across Japan</em> — from location scouting to cast and crew coordination. We know this country, its landscapes, and its people.
+    </p>
+    <div class="services-grid">
+      <div class="service-card reveal reveal-d1">
+        <div class="service-num">01</div>
+        <p class="service-title">Location Scouting</p>
+        <p class="service-desc">Nationwide location research and permits. Urban, rural, coastal, traditional — we find the right backdrop for your story.</p>
+      </div>
+      <div class="service-card reveal reveal-d2">
+        <div class="service-num">02</div>
+        <p class="service-title">Cast &amp; Talent</p>
+        <p class="service-desc">Access to a wide network of professional actors across Japan. We handle casting coordination for both leading and supporting roles.</p>
+      </div>
+      <div class="service-card reveal reveal-d3">
+        <div class="service-num">03</div>
+        <p class="service-title">Crew &amp; Production</p>
+        <p class="service-desc">Full crew assembly — directors of photography, art direction, sound, and production management — tailored to your project scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <div class="inner">
+    <p class="sec-label reveal">Contact</p>
+    <h2 class="contact-heading reveal">Let's bring this story<br><em>to the world.</em></h2>
+    <p class="contact-sub reveal">For international sales, festival submissions, press enquiries,<br>and Japan production services.</p>
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <p class="contact-name">Koichi Izuhara</p>
+        <p class="contact-role">Director</p>
+        <p class="contact-email"><a href="mailto:mimimio815@gmail.com">mimimio815@gmail.com</a></p>
+      </div>
+      <div class="contact-card reveal reveal-d1">
+        <p class="contact-name">Mariko Miyagai</p>
+        <p class="contact-role">International Sales &amp; Relations Manager</p>
+        <p class="contact-email"><a href="mailto:m.miyagai@u-font.com">m.miyagai@u-font.com</a></p>
+      </div>
+    </div>
+    <p class="contact-web reveal" style="margin-top:2.5rem;">
+      <a href="https://bakkon-movie.jp">bakkon-movie.jp</a>
+      &nbsp;·&nbsp;
+      <a href="https://www.instagram.com/bakkon.movie/">@bakkon.movie</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-logo">DANJIRI &nbsp;·&nbsp; PLAN IZ</p>
+  <p class="footer-copy">© 2025 BAKKON! Production Committee · All rights reserved</p>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
